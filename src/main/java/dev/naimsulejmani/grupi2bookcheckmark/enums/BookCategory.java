@@ -1,4 +1,4 @@
-package dev.naimsulejmani.grupi2bookcheckmark.models;
+package dev.naimsulejmani.grupi2bookcheckmark.enums;
 
 public enum BookCategory {
     FANTASY,

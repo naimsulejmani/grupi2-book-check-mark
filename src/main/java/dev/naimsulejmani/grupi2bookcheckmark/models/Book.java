@@ -1,5 +1,7 @@
 package dev.naimsulejmani.grupi2bookcheckmark.models;
 
+import dev.naimsulejmani.grupi2bookcheckmark.enums.BookCategory;
+import dev.naimsulejmani.grupi2bookcheckmark.enums.BookPageFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

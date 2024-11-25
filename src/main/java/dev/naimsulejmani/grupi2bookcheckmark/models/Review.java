@@ -1,5 +1,6 @@
 package dev.naimsulejmani.grupi2bookcheckmark.models;
 
+import dev.naimsulejmani.grupi2bookcheckmark.enums.Rating;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
