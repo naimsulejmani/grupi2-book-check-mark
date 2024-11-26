@@ -6,12 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "authors")
-//@Table(name = "authors", schema = "public")
+//@Table(name = "authors", schema = "HR")
 public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class Author {
     @Column(nullable = false, length = 50)
     private String surname;
     @Column(length = 25)
-    private String middleName; // middle_name
+    private String nickname; // middle_name
     @Column(length = 4000)
     private String bio;
     @Column(length = 100)
@@ -30,4 +32,14 @@ public class Author {
 
     @Column(length = 100, unique = true)
     private String email;
+    // alter table authors add column birthdate timestamp
+    private LocalDate birthdate;
 }
+
+
+
+
+
+
+
+

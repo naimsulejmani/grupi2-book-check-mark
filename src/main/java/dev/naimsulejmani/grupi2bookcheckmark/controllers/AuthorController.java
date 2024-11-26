@@ -20,17 +20,13 @@ public class AuthorController {
 
     @GetMapping("")
     public String index(Model model) {
-        Author author = new Author();
-        author.setBio("This is a bio");
-        int rnd = new Random().nextInt(1_000_000_000);
-        author.setEmail("ce_" + rnd + "@example.com");
-        author.setName("Name"+rnd);
-        author.setSurname("Surname"+rnd);
-        author.setMiddleName("MiddleName"+rnd);
-        authorService.save(author);
-
-
         model.addAttribute("authors", authorService.findAll());
         return "authors/index";
+    }
+
+    @GetMapping("/new")
+    public String newAuthor(Model model) {
+        model.addAttribute("author", new Author());
+        return "authors/new";
     }
 }

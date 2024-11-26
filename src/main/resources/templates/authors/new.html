@@ -1,0 +1,21 @@
+<html th:replace="~{fragments/_layout::layout('Home Page', ~{::#naja}, null, null, ~{::ol.breadcrumb})}">
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/authors}">Authors</a></li>
+    <li class="breadcrumb-item active">New Author</li>
+</ol>
+
+<div id="naja">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Register new Author</h5>
+
+            <form method="post" th:object="${author}">
+
+            </form>
+
+        </div>
+    </div>
+</div>
+</html>
