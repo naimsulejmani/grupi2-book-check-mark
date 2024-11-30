@@ -1,0 +1,158 @@
+<html th:replace="~{fragments/_layout::layout('Home Page', ~{::#naja}, null, null, ~{::ol.breadcrumb})}">
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/authors}">Authors</a></li>
+    <li class="breadcrumb-item active">Details</li>
+</ol>
+
+<div id="naja">
+    <div class="card">
+        <div class="card-body">
+            <div class="row col">
+                <th:inline th:replace="~{fragments/_back-to-previous-page.html}"></th:inline>
+
+                <form method="post" th:if="${deleteBtn!=null && deleteBtn==true}">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+
+            </div>
+
+            <div id="authorDetails">
+                <div th:unless="${author!=null}">
+                    <div class="alert alert-danger" role="alert">
+                        Author not found!
+                    </div>
+                </div>
+
+                <section class="section profile" th:if="${author!=null}" th:object="${author}">
+                    <div class="row">
+                        <div class="col-xl-4">
+
+                            <div class="card">
+                                <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+                                    <img th:src="*{imageUrl}" alt="Profile" class="rounded-circle">
+                                    <h2>
+                                        <span th:text="*{name}"></span> <span th:text="*{surname}"></span>
+                                    </h2>
+                                    <h3>Nobelist Author</h3>
+                                    <div class="social-links mt-2">
+                                        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="col-xl-8">
+
+                            <div class="card">
+                                <div class="card-body pt-3">
+                                    <!-- Bordered Tabs -->
+                                    <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
+
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link active" data-bs-toggle="tab"
+                                                    data-bs-target="#profile-overview" aria-selected="true" role="tab">
+                                                Overview
+                                            </button>
+                                        </li>
+
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit"
+                                                    aria-selected="false" role="tab" tabindex="-1">Edit Profile
+                                            </button>
+                                        </li>
+
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#profile-settings"
+                                                    aria-selected="false" role="tab" tabindex="-1">Settings
+                                            </button>
+                                        </li>
+
+                                        <li class="nav-item" role="presentation">
+                                            <button class="nav-link" data-bs-toggle="tab"
+                                                    data-bs-target="#profile-change-password" aria-selected="false"
+                                                    role="tab" tabindex="-1">Change Password
+                                            </button>
+                                        </li>
+
+                                    </ul>
+                                    <div class="tab-content pt-2">
+
+                                        <div class="tab-pane fade profile-overview active show" id="profile-overview"
+                                             role="tabpanel">
+                                            <h5 class="card-title">About</h5>
+                                            <div class="small fst-italic" th:text="*{bio}"></div>
+
+                                            <h5 class="card-title">Profile Details</h5>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                                                <div class="col-lg-9 col-md-8">
+                                                    <span th:text="*{name}"></span> <span th:text="*{surname}"></span>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Nickname</div>
+                                                <div class="col-lg-9 col-md-8" th:text="*{nickname}"></div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Email</div>
+                                                <div class="col-lg-9 col-md-8" th:text="*{email}"></div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-3 col-md-4 label">Birthdate</div>
+                                                <div class="col-lg-9 col-md-8" th:text="*{birthdate}"></div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade profile-edit pt-3" id="profile-edit" role="tabpanel">
+
+                                            <div class="row mb-3">
+                                                <p>Under construction!</p>
+                                                <i class="bi bi-tools" style="font-size: 25px"></i>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade pt-3" id="profile-settings" role="tabpanel">
+
+                                            <div class="row mb-3">
+                                                <p>Under construction!</p>
+                                                <i class="bi bi-tools" style="font-size: 25px"></i>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="tab-pane fade pt-3" id="profile-change-password" role="tabpanel">
+                                            <div class="row mb-3">
+                                                <p>Under construction!</p>
+                                                <i class="bi bi-tools" style="font-size: 25px"></i>
+                                            </div>
+
+                                        </div>
+
+                                    </div><!-- End Bordered Tabs -->
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+</div>
+</html>

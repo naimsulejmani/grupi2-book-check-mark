@@ -3,17 +3,78 @@
 <ol class="breadcrumb">
     <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
     <li class="breadcrumb-item"><a th:href="@{/authors}">Authors</a></li>
-    <li class="breadcrumb-item active">New Author</li>
+    <li class="breadcrumb-item active">New</li>
 </ol>
 
 <div id="naja">
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Register new Author</h5>
+            <h5 class="card-title">Register New Author
+            <th:inline th:replace="~{fragments/_back-to-previous-page.html}"></th:inline>
+            </h5>
 
-            <form method="post" th:object="${author}">
+            <!-- General Form Elements -->
+            <form method="post" th:object="${author}" id="authorForm" th:if="${author!=null}">
+                <input type="hidden" th:field="*{id}"/>
+                <div class="row mb-3">
+                    <label for="name" class="col-sm-2 col-form-label">Name</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{name}"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="surname" class="col-sm-2 col-form-label">Surname</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{surname}"/>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="nickname" class="col-sm-2 col-form-label">Nickname</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" th:field="*{nickname}"/>
+                    </div>
+                </div>
 
-            </form>
+
+                <div class="row mb-3">
+                    <label for="imageUrl" class="col-sm-2 col-form-label">File Upload</label>
+                    <div class="col-sm-10">
+                        <input class="form-control" type="text" th:field="*{imageUrl}">
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <label for="birthdate" class="col-sm-2 col-form-label">Date</label>
+                    <div class="col-sm-10">
+                        <input type="date" class="form-control" name="birthdate" id="birthdate" th:value="*{birthdate}">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input type="email" class="form-control" th:field="*{email}">
+                    </div>
+                </div>
+
+
+
+                <div class="row mb-3">
+                    <label for="bio" class="col-sm-2 col-form-label">Bio</label>
+                    <div class="col-sm-10">
+                        <textarea class="form-control" style="height: 100px" th:field="*{bio}"></textarea>
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </div>
+
+            </form><!-- End General Form Elements -->
 
         </div>
     </div>

@@ -1,0 +1,25 @@
+<html th:replace="~{fragments/_layout::layout('Home Page', ~{::#naja}, null, null, ~{::ol.breadcrumb})}">
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/authors}">Authors</a></li>
+    <li class="breadcrumb-item active">Details</li>
+</ol>
+
+<div id="naja">
+    <div class="card">
+        <div class="card-body">
+            <div class="row col">
+                <th:inline th:replace="~{fragments/_back-to-previous-page.html}"></th:inline>
+                <form method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+
+            <th:block th:replace="~{authors/details.html::#authorDetails}">
+
+            </th:block>
+        </div>
+    </div>
+</div>
+</html>

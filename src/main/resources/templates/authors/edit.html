@@ -1,0 +1,31 @@
+<html th:replace="~{fragments/_layout::layout('Home Page', ~{::#naja}, null, null, ~{::ol.breadcrumb})}">
+
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
+    <li class="breadcrumb-item"><a th:href="@{/authors}">Authors</a></li>
+    <li class="breadcrumb-item active">Edit</li>
+</ol>
+
+<div id="naja">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Modify the Author
+            <th:inline th:replace="~{fragments/_back-to-previous-page.html}"></th:inline>
+            </h5>
+
+            <div th:unless="${author!=null}">
+                <div class="alert alert-danger" role="alert">
+                    Author not found!
+                </div>
+            </div>
+
+            <th:block th:replace="~{authors/new.html::#authorForm}" th:if="${author!=null}">
+
+            </th:block>
+
+
+
+        </div>
+    </div>
+</div>
+</html>
