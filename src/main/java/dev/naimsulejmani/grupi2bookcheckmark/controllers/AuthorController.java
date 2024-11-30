@@ -5,6 +5,7 @@ import dev.naimsulejmani.grupi2bookcheckmark.services.AuthorService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Random;
 
@@ -18,7 +19,12 @@ public class AuthorController {
     }
 
     @GetMapping("")
-    public String index(Model model) {
+    public String index(Model model, @RequestParam(required = false) String errorId ) {
+//        if(errorId != null){
+//            switch(errorId) {
+//                case "ERR101" :
+//            }
+//        }
         model.addAttribute("authors", authorService.findAll());
         return "authors/index";
     }
@@ -30,20 +36,29 @@ public class AuthorController {
     }
 
     @PostMapping("/new")
-    public String newAuthor(@ModelAttribute Author author) {
+    public String newAuthor(@ModelAttribute Author author, RedirectAttributes redirectAttributes) {
         authorService.save(author);
+        redirectAttributes.addFlashAttribute("successMessage","Author created successfully");
         return "redirect:/authors";
     }
 
     @GetMapping("/{id}/edit")
-    public String editAuthor(Model model,@PathVariable Long id) {
+    public String editAuthor(Model model, @PathVariable Long id) {
         var author = authorService.findById(id);
         model.addAttribute("author", author);
         return "authors/edit";
     }
 
     @PostMapping("/{id}/edit")
-    public String editAuthor(@ModelAttribute Author author, @PathVariable Long id) {
+    public String editAuthor(@ModelAttribute Author author, @PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if (author.getId() != id) {
+            //paso parameterin si query string @RequestParam
+            //http://localhost:8080/authors?errorId=ERR101
+            redirectAttributes.addAttribute("errorId", "ERR101");
+            // paso parametrin si object
+            redirectAttributes.addFlashAttribute("errorMessage","Author id does not match");
+            return "redirect:/authors";
+        }
         authorService.save(author);
         return "redirect:/authors";
     }
@@ -59,7 +74,7 @@ public class AuthorController {
     public String delete(Model model, @PathVariable Long id) {
         var author = authorService.findById(id);
         model.addAttribute("author", author);
-        model.addAttribute("deleteBtn",true);
+        model.addAttribute("deleteBtn", true);
 //       return "authors/delete";
         return "authors/details";
     }
