@@ -19,7 +19,7 @@
                 <div class="row mb-3">
                     <label for="name" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" th:field="*{name}"/>
+                        <input type="text" class="form-control" th:field="*{name}" required/>
                     </div>
                     <div class="col-sm-10">
                         <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
@@ -29,7 +29,7 @@
                 <div class="row mb-3">
                     <label for="surname" class="col-sm-2 col-form-label">Surname</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control" th:field="*{surname}"/>
+                        <input type="text" class="form-control" th:field="*{surname}" required/>
                     </div>
                     <div class="col-sm-10">
                         <span class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
@@ -58,7 +58,7 @@
                 <div class="row mb-3">
                     <label for="birthdate" class="col-sm-2 col-form-label">Date</label>
                     <div class="col-sm-10">
-                        <input type="date" class="form-control" name="birthdate" id="birthdate" th:value="*{birthdate}">
+                        <input type="date" class="form-control" name="birthdate" id="birthdate" th:value="*{birthdate}" required>
                     </div>
                     <div class="col-sm-10">
                         <span class="text-danger" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></span>
@@ -68,10 +68,10 @@
                 <div class="row mb-3">
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
-                        <input type="email" class="form-control" th:field="*{email}">
+                        <input type="email" class="form-control" th:field="*{email}" required>
                     </div>
                     <div class="col-sm-10">
-                        <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                        <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" ></span>
                     </div>
                 </div>
 
