@@ -21,17 +21,27 @@
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{name}"/>
                     </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
+                    </div>
+
                 </div>
                 <div class="row mb-3">
                     <label for="surname" class="col-sm-2 col-form-label">Surname</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{surname}"/>
                     </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <label for="nickname" class="col-sm-2 col-form-label">Nickname</label>
                     <div class="col-sm-10">
                         <input type="text" class="form-control" th:field="*{nickname}"/>
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}"></span>
                     </div>
                 </div>
 
@@ -41,11 +51,17 @@
                     <div class="col-sm-10">
                         <input class="form-control" type="text" th:field="*{imageUrl}">
                     </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}"></span>
+                    </div>
                 </div>
                 <div class="row mb-3">
                     <label for="birthdate" class="col-sm-2 col-form-label">Date</label>
                     <div class="col-sm-10">
                         <input type="date" class="form-control" name="birthdate" id="birthdate" th:value="*{birthdate}">
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></span>
                     </div>
                 </div>
 
@@ -53,6 +69,9 @@
                     <label for="email" class="col-sm-2 col-form-label">Email</label>
                     <div class="col-sm-10">
                         <input type="email" class="form-control" th:field="*{email}">
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
                     </div>
                 </div>
 
@@ -62,6 +81,9 @@
                     <label for="bio" class="col-sm-2 col-form-label">Bio</label>
                     <div class="col-sm-10">
                         <textarea class="form-control" style="height: 100px" th:field="*{bio}"></textarea>
+                    </div>
+                    <div class="col-sm-10">
+                        <span class="text-danger" th:if="${#fields.hasErrors('bio')}" th:errors="*{bio}"></span>
                     </div>
                 </div>
 

@@ -2,8 +2,11 @@ package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 
 import dev.naimsulejmani.grupi2bookcheckmark.models.Author;
 import dev.naimsulejmani.grupi2bookcheckmark.services.AuthorService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,7 +22,7 @@ public class AuthorController {
     }
 
     @GetMapping("")
-    public String index(Model model, @RequestParam(required = false) String errorId ) {
+    public String index(Model model, @RequestParam(required = false) String errorId) {
 //        if(errorId != null){
 //            switch(errorId) {
 //                case "ERR101" :
@@ -36,9 +39,13 @@ public class AuthorController {
     }
 
     @PostMapping("/new")
-    public String newAuthor(@ModelAttribute Author author, RedirectAttributes redirectAttributes) {
+    public String newAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(System.out::println);
+            return "authors/new";
+        }
         authorService.save(author);
-        redirectAttributes.addFlashAttribute("successMessage","Author created successfully");
+        redirectAttributes.addFlashAttribute("successMessage", "Author created successfully");
         return "redirect:/authors";
     }
 
@@ -50,13 +57,18 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}/edit")
-    public String editAuthor(@ModelAttribute Author author, @PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String editAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult, @PathVariable Long id, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(System.out::println);
+//            bindingResult.addError(new FieldError("author", "id", "Id is not valid"));
+            return "authors/edit";
+        }
         if (author.getId() != id) {
             //paso parameterin si query string @RequestParam
             //http://localhost:8080/authors?errorId=ERR101
             redirectAttributes.addAttribute("errorId", "ERR101");
             // paso parametrin si object
-            redirectAttributes.addFlashAttribute("errorMessage","Author id does not match");
+            redirectAttributes.addFlashAttribute("errorMessage", "Author id does not match");
             return "redirect:/authors";
         }
         authorService.save(author);
