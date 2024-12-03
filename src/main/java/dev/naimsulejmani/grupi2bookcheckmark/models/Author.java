@@ -39,7 +39,7 @@ public class Author {
     private String bio;
     @Column(length = 100)
     //  /images/authors/author_1.jpg
-    private String imageUrl = "/images/authors/author_1.jpg"; //image_url
+    private String imageUrl;
 
     @Column(length = 100, unique = true)
     @Email(message = "Email should be valid")

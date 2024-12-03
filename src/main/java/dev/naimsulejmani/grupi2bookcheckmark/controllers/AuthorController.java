@@ -2,12 +2,14 @@ package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 
 import dev.naimsulejmani.grupi2bookcheckmark.models.Author;
 import dev.naimsulejmani.grupi2bookcheckmark.services.AuthorService;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Random;
@@ -39,11 +41,14 @@ public class AuthorController {
     }
 
     @PostMapping("/new")
-    public String newAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String newAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult, RedirectAttributes redirectAttributes
+            , @RequestParam("file") MultipartFile file) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "authors/new";
         }
+
+
         authorService.save(author);
         redirectAttributes.addFlashAttribute("successMessage", "Author created successfully");
         return "redirect:/authors";
