@@ -14,7 +14,8 @@
             </h5>
 
             <!-- General Form Elements -->
-            <form method="post" th:object="${author}" id="authorForm" th:if="${author!=null}" enctype="multipart/form-data">
+            <form method="post" th:object="${author}" id="authorForm" th:if="${author!=null}"
+                  enctype="multipart/form-data">
                 <input type="hidden" th:field="*{id}"/>
                 <div class="row mb-3">
                     <label for="name" class="col-sm-2 col-form-label">Name</label>
@@ -47,9 +48,10 @@
 
 
                 <div class="row mb-3">
-                    <label for="imageUrl" class="col-sm-2 col-form-label">File Upload</label>
+                    <label for="file" class="col-sm-2 col-form-label">File Upload</label>
                     <div class="col-sm-10">
                         <input class="form-control" type="file" name="file" id="file">
+                        <input type="hidden" th:field="*{imageUrl}">
                     </div>
                 </div>
                 <div class="row mb-3">

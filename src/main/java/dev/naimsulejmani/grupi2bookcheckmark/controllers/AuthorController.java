@@ -1,5 +1,6 @@
 package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 
+import dev.naimsulejmani.grupi2bookcheckmark.helpers.FileHelper;
 import dev.naimsulejmani.grupi2bookcheckmark.models.Author;
 import dev.naimsulejmani.grupi2bookcheckmark.services.AuthorService;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -12,15 +13,24 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Random;
+import java.util.UUID;
 
 @Controller
 @RequestMapping("/authors")
 public class AuthorController {
     private final AuthorService authorService;
+    private final FileHelper fileHelper;
 
-    public AuthorController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService, FileHelper fileHelper) {
         this.authorService = authorService;
+        this.fileHelper = fileHelper;
     }
 
     @GetMapping("")
@@ -47,6 +57,46 @@ public class AuthorController {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "authors/new";
         }
+//        if (file.isEmpty()) {
+//            bindingResult.addError(new FieldError("author", "file", "File is required"));
+//            return "authors/new";
+//        }
+//        try {
+//            //Path path = Paths.get("c:\\images\\authors");
+//
+//
+//
+////            Path path = Paths.get("target/classes/static/assets/img/authors");
+////
+////
+////            if (!Files.exists(path)) {
+////                Files.createDirectories(path);
+////            }
+////
+////            byte[] fileBytes = file.getBytes();
+////
+////            String fileName = UUID.randomUUID() + "-" + file.getOriginalFilename();
+////
+////            Path filePath = Paths.get(path.toString(), fileName);
+////
+////            // Store the relative path to the image
+////            author.setImageUrl("/assets/img/authors/" + fileName);
+//////            author.setImageUrl(filePath.toString().replace("src/main/resources/static",""));
+////
+////            Files.write(filePath, fileBytes);
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+
+
+        try {
+            String fileName = fileHelper.uploadFile("target/classes/static/assets/img/authors"
+                    , file.getOriginalFilename()
+                    , file.getBytes());
+            author.setImageUrl("/assets/img/authors/" + fileName);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
 
         authorService.save(author);
@@ -62,7 +112,10 @@ public class AuthorController {
     }
 
     @PostMapping("/{id}/edit")
-    public String editAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult, @PathVariable Long id, RedirectAttributes redirectAttributes) {
+    public String editAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult
+            , @PathVariable Long id, RedirectAttributes redirectAttributes
+            , @RequestParam("file") MultipartFile file
+    ) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
 //            bindingResult.addError(new FieldError("author", "id", "Id is not valid"));
@@ -75,6 +128,17 @@ public class AuthorController {
             // paso parametrin si object
             redirectAttributes.addFlashAttribute("errorMessage", "Author id does not match");
             return "redirect:/authors";
+        }
+
+        if(file!=null && !file.isEmpty()) {
+            try {
+                String fileName = fileHelper.uploadFile("target/classes/static/assets/img/authors"
+                        , file.getOriginalFilename()
+                        , file.getBytes());
+                author.setImageUrl("/assets/img/authors/" + fileName);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         authorService.save(author);
         return "redirect:/authors";

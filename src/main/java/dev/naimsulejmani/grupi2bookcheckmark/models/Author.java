@@ -37,7 +37,7 @@ public class Author {
     @Column(length = 4000)
     @Size(max = 4000, message = "Bio should be less than 4000 characters")
     private String bio;
-    @Column(length = 100)
+    @Column(length = 2000)
     //  /images/authors/author_1.jpg
     private String imageUrl;
 
