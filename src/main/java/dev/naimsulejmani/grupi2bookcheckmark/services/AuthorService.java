@@ -29,7 +29,28 @@ public class AuthorService {
         // SELECT * FROM authors WHERE id = ?;
     }
 
-    public Author save(Author author) {
+    public Author add(Author author) {
+        if (author.getId() > 0) {
+            var existAuthor = authorRepository.existsById(author.getId());
+            if (existAuthor) {
+                System.out.println("Author with id " + author.getId() + " already exists.");
+                return null;
+            }
+        }
+        if (author.getEmail() != null) {
+            var existAuthor = authorRepository.findByEmail(author.getEmail());
+            if (existAuthor.isPresent()) {
+                System.out.println("Author with email " + author.getEmail() + " already exists.");
+                return null;
+            }
+        }
+        return authorRepository.save(author);
+        // INSERT INTO authors (name, surname, middle_name, bio, image_url, email) VALUES (?, ?, ?, ?, ?, ?);
+        // or
+        // UPDATE authors SET name = ?, surname = ?, middle_name = ?, bio = ?, image_url = ?, email = ? WHERE id = ?;
+    }
+
+    public Author modify(Author author) {
         return authorRepository.save(author);
         // INSERT INTO authors (name, surname, middle_name, bio, image_url, email) VALUES (?, ?, ?, ?, ?, ?);
         // or

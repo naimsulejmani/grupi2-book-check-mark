@@ -3,24 +3,15 @@ package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 import dev.naimsulejmani.grupi2bookcheckmark.helpers.FileHelper;
 import dev.naimsulejmani.grupi2bookcheckmark.models.Author;
 import dev.naimsulejmani.grupi2bookcheckmark.services.AuthorService;
-import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Random;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/authors")
@@ -99,7 +90,13 @@ public class AuthorController {
         }
 
 
-        authorService.save(author);
+        var newAuthor = authorService.add(author);
+        if (newAuthor == null) {
+            bindingResult.rejectValue("email", "author.email", "EMAIL already exists");
+            return "authors/new";
+//            redirectAttributes.addFlashAttribute("errorMessage", "Author already exists");
+//            return "redirect:/authors";
+        }
         redirectAttributes.addFlashAttribute("successMessage", "Author created successfully");
         return "redirect:/authors";
     }
@@ -129,7 +126,7 @@ public class AuthorController {
             redirectAttributes.addFlashAttribute("errorMessage", "Author id does not match");
             return "redirect:/authors";
         }
-
+//
         if(file!=null && !file.isEmpty()) {
             try {
                 String fileName = fileHelper.uploadFile("target/classes/static/assets/img/authors"
@@ -140,7 +137,22 @@ public class AuthorController {
                 throw new RuntimeException(e);
             }
         }
-        authorService.save(author);
+
+//        for (MultipartFile f : file) {
+//            if (!f.isEmpty()) {
+//                try {
+//                    String fileName = fileHelper.uploadFile("target/classes/static/assets/img/authors"
+//                            , f.getOriginalFilename()
+//                            , f.getBytes());
+//                    System.out.println("fileName: " + fileName);
+//                } catch (Exception ex) {
+//                    System.out.println(ex.getMessage());
+//                }
+//
+//                // ruaje ne  databze kete fajlle
+//            }
+//        }
+        authorService.add(author);
         return "redirect:/authors";
     }
 

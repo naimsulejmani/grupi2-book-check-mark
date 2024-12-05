@@ -46,6 +46,12 @@
                     </div>
                 </div>
 
+                <div class="row mb-3" th:if="*{imageUrl!=null && !imageUrl.isBlank()}">
+                    <div class="col-2">Image</div>
+                    <div class="col-10">
+                        <img th:src="*{imageUrl}" alt="NO PICTURE" style="width: 120px; height: 120px"/>
+                    </div>
+                </div>
 
                 <div class="row mb-3">
                     <label for="file" class="col-sm-2 col-form-label">File Upload</label>
