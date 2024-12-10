@@ -1,6 +1,7 @@
 package dev.naimsulejmani.grupi2bookcheckmark.mappers.impls;
 
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserDto;
+import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserListDto;
 import dev.naimsulejmani.grupi2bookcheckmark.mappers.UserMapper;
 import dev.naimsulejmani.grupi2bookcheckmark.models.User;
 import org.springframework.stereotype.Component;
@@ -42,5 +43,16 @@ public class UserMapperImpl implements UserMapper {
         user.setCountry(userDto.getCountry());
         user.setPostalCode(userDto.getPostalCode());
         return user;
+    }
+
+    @Override
+    public UserListDto toUserListDto(User user) {
+        UserListDto uld = new UserListDto();
+        uld.setId(user.getId());
+        uld.setName(user.getName());
+        uld.setSurname(user.getSurname());
+        uld.setUsername(user.getUsername());
+        uld.setEmail(user.getEmail());
+        return uld;
     }
 }

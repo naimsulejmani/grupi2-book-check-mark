@@ -14,19 +14,20 @@ public class HomeController {
     @GetMapping("")
     public String home(HttpServletRequest request, HttpServletResponse response) {
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("id")) {
-                    System.out.println("Cookie found: " + cookie.getValue());
-                    return "redirect:/authors";
-                }
-            }
-        }
-
-        Cookie cookie = new Cookie("id", UUID.randomUUID().toString());
-        cookie.setMaxAge(60 * 60 * 24 * 365); // 1 year
-        response.addCookie(cookie);
+//        Cookie[] cookies = request.getCookies();
+//        if (cookies != null) {
+//            for (Cookie cookie : cookies) {
+//                if (cookie.getName().equals("id")) {
+//                    System.out.println("Cookie found: " + cookie.getValue());
+//                    return "redirect:/authors";
+//                }
+//            }
+//        }
+//        //service mi jep userlistdto
+//
+//        Cookie cookie = new Cookie("id", UUID.randomUUID().toString());
+//        cookie.setMaxAge(60 * 60 * 24 * 365); // 1 year
+//        response.addCookie(cookie);
         return "index";
     }
 }
