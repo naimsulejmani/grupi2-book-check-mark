@@ -41,6 +41,25 @@ public class UserServiceImpl implements UserService {
 
             repository.save(user);
         }
+
+        if (repository.count() == 1) {
+            User user = new User();
+            user.setCity("Fushe Kosove");
+            user.setEmail("andarexhepi@gmail.com");
+            user.setBirthdate(LocalDate.now().minusYears(38));
+            user.setCountry("Kosova");
+            user.setInterests("Sport, reading and everything!");
+            user.setAddress("rr. Nena tereze, F.K");
+            user.setName("Anda");
+            user.setSurname("Rexhepi");
+            user.setPostalCode("12000");
+            user.setGender('M');
+            user.setPassword("Admin123");
+            user.setUsername("andarexhepi");
+            user.setImageUrl(null);
+
+            repository.save(user);
+        }
     }
 
     @Override

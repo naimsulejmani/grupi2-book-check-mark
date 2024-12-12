@@ -3,7 +3,9 @@ package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.LoginRequestDto;
 import dev.naimsulejmani.grupi2bookcheckmark.services.UserService;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,8 +32,10 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute LoginRequestDto loginRequestDto
+    public String login(
+            @Valid @ModelAttribute LoginRequestDto loginRequestDto
             , BindingResult bindingResult
+            , HttpServletRequest request
             , HttpServletResponse response
             , @RequestParam(value = "returnUrl", required = false) String returnUrl
     ) {
@@ -46,6 +50,12 @@ public class AuthController {
             bindingResult.rejectValue("password", "", "Wrong username or password!");
             return "auth/login";
         }
+
+        HttpSession session = request.getSession(); // krijo nje session te ri
+        session.setAttribute("user", userDto);
+        session.setAttribute("grupi", "2");
+//        session.setAttribute("items", "laptop lenovo x carbon");
+
 
         Cookie cookie = new Cookie("userId", String.valueOf(userDto.getId()));
         if (loginRequestDto.isRememberMe())

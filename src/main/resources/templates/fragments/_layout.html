@@ -377,6 +377,11 @@
         <!-- Licensing information: https://bootstrapmade.com/license/ -->
         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        <hr/>
+        <div th:if="${session!=null && session.size()>0 && session.get('user')!=null}">
+                <span th:text="${session.user.email}"></span>
+                -> Grupi <span th:text="${session.grupi}"></span>
+        </div>
     </div>
 </footer><!-- End Footer -->
 

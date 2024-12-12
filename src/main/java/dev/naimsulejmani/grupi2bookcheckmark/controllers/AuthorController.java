@@ -1,8 +1,11 @@
 package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 
+import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserDto;
 import dev.naimsulejmani.grupi2bookcheckmark.helpers.FileHelper;
 import dev.naimsulejmani.grupi2bookcheckmark.models.Author;
 import dev.naimsulejmani.grupi2bookcheckmark.services.AuthorService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,8 +45,12 @@ public class AuthorController {
     }
 
     @PostMapping("/new")
-    public String newAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult, RedirectAttributes redirectAttributes
-            , @RequestParam("file") MultipartFile file) {
+    public String newAuthor(
+            @Valid @ModelAttribute Author author,
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes
+            , @RequestParam("file") MultipartFile file,
+            HttpServletRequest request) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
             return "authors/new";
@@ -89,6 +96,16 @@ public class AuthorController {
             throw new RuntimeException(e);
         }
 
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            var user = (UserDto) session.getAttribute("user");
+            if (user == null) {
+                author.setCreatedBy("admin");
+            } else {
+                author.setCreatedBy(user.getUsername());
+            }
+        }
+
 
         var newAuthor = authorService.add(author);
         if (newAuthor == null) {
@@ -112,6 +129,7 @@ public class AuthorController {
     public String editAuthor(@Valid @ModelAttribute Author author, BindingResult bindingResult
             , @PathVariable Long id, RedirectAttributes redirectAttributes
             , @RequestParam("file") MultipartFile file
+            , @SessionAttribute("user") UserDto userDto
     ) {
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(System.out::println);
@@ -127,7 +145,7 @@ public class AuthorController {
             return "redirect:/authors";
         }
 //
-        if(file!=null && !file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             try {
                 String fileName = fileHelper.uploadFile("target/classes/static/assets/img/authors"
                         , file.getOriginalFilename()
@@ -152,6 +170,13 @@ public class AuthorController {
 //                // ruaje ne  databze kete fajlle
 //            }
 //        }
+
+        if (!author.getCreatedBy().equals(userDto.getUsername())) {
+            redirectAttributes.addFlashAttribute("errorMessage",
+                    "You are not allowed to edit this author, because you didnt created it!");
+            return "redirect:/authors";
+        }
+
         authorService.add(author);
         return "redirect:/authors";
     }

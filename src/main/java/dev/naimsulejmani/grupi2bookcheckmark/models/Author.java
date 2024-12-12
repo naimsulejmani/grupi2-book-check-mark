@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -49,6 +50,15 @@ public class Author {
     @Past(message = "Birthdate should be in the past")
 //    @AtLeast18YearsOld(message = "Author should be at least 18 years old")
     private LocalDate birthdate;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column(nullable = false, updatable = false, length = 50)
+    private String createdBy;
+
+    private LocalDateTime modifiedAt;
+    private String modifiedBy;
 }
 
 
