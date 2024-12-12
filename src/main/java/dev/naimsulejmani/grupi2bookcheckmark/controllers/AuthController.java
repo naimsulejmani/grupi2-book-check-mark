@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
@@ -32,6 +33,7 @@ public class AuthController {
     public String login(@Valid @ModelAttribute LoginRequestDto loginRequestDto
             , BindingResult bindingResult
             , HttpServletResponse response
+            , @RequestParam(value = "returnUrl", required = false) String returnUrl
     ) {
         if (bindingResult.hasErrors()) {
             return "auth/login";
@@ -52,6 +54,9 @@ public class AuthController {
             cookie.setMaxAge(60 * 60); //1 hour
         response.addCookie(cookie);
 
+        if (returnUrl != null && !returnUrl.isBlank())
+            return "redirect:" + returnUrl;
+
         return "redirect:/";
     }
 
@@ -59,4 +64,32 @@ public class AuthController {
     public String register() {
         return "auth/register";
     }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        // make cookie expire / invalid
+        Cookie cookie = new Cookie("userId", "");
+        cookie.setMaxAge(0); // 0 seconds available
+        response.addCookie(cookie);
+        return "redirect:/login";
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

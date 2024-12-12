@@ -37,7 +37,7 @@ public class CookieSimpleFilter extends OncePerRequestFilter {
                 filterChain.doFilter(request, response);
                 return;
             }
-            response.sendRedirect("/login");
+            response.sendRedirect("/login?returnUrl=" + request.getRequestURI());
             return;
         }
 
@@ -51,13 +51,13 @@ public class CookieSimpleFilter extends OncePerRequestFilter {
 
                 var user = userService.findById(Long.parseLong(cookie.getValue()));
 
-            // reseto Cookie
+                // reseto Cookie
                 //redirect ne login
                 // check if user is active, disabled, banned to redirect on specific page
 
                 // perndryshe add user to request
 
-                request.setAttribute("user",user);
+                request.setAttribute("user", user);
 
 
                 //shko te filteri i rradhes (per ne controlleri)
@@ -67,7 +67,7 @@ public class CookieSimpleFilter extends OncePerRequestFilter {
         }
 
         if (!request.getRequestURI().startsWith("/login"))
-            response.sendRedirect("/login");
+            response.sendRedirect("/login?returnUrl=" + request.getRequestURI());
         else
             filterChain.doFilter(request, response);
     }
