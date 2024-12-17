@@ -47,6 +47,7 @@ public class UserRequestRegistrationDto {
     private String postalCode;
 
 //    @NotEquals(value = "M")
+    //@OnlyMaleFemale
     private char gender;
 
     @NotBlank(message = "Password is required")

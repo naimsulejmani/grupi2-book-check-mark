@@ -1,6 +1,7 @@
 package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.LoginRequestDto;
+import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserRequestRegistrationDto;
 import dev.naimsulejmani.grupi2bookcheckmark.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -73,6 +74,16 @@ public class AuthController {
     @GetMapping("/register")
     public String register() {
         return "auth/register";
+    }
+
+
+    @PostMapping("/register")
+    public String register(@Valid @ModelAttribute UserRequestRegistrationDto userRequestRegistrationDto,
+                           BindingResult bindingResult) {
+        if(bindingResult.hasErrors()) {
+            return "auth/register";
+        }
+        return "redirect:/login";
     }
 
     @PostMapping("/logout")
