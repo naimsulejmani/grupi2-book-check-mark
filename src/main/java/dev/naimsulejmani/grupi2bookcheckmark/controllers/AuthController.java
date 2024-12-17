@@ -76,11 +76,14 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         // make cookie expire / invalid
         Cookie cookie = new Cookie("userId", "");
         cookie.setMaxAge(0); // 0 seconds available
         response.addCookie(cookie);
+
+        HttpSession session = request.getSession(false);
+        session.invalidate();
         return "redirect:/login";
     }
 
