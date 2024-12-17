@@ -11,7 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Configuration
+//@Configuration
 public class CookieSimpleFilter extends OncePerRequestFilter {
 
     private final UserService userService;
