@@ -3,9 +3,15 @@ package dev.naimsulejmani.grupi2bookcheckmark.dtos;
 import dev.naimsulejmani.grupi2bookcheckmark.infrastructure.MinAge;
 import dev.naimsulejmani.grupi2bookcheckmark.infrastructure.NotEquals;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserRequestRegistrationDto {
 
     @NotBlank(message = "Name is required")
