@@ -1,13 +1,18 @@
 package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.LoginRequestDto;
+import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserDto;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserRequestRegistrationDto;
+import dev.naimsulejmani.grupi2bookcheckmark.exceptions.EmailExistException;
+import dev.naimsulejmani.grupi2bookcheckmark.exceptions.UsernameExistException;
+import dev.naimsulejmani.grupi2bookcheckmark.exceptions.WrongPasswordException;
 import dev.naimsulejmani.grupi2bookcheckmark.services.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthController {
@@ -44,31 +50,37 @@ public class AuthController {
             return "auth/login";
         }
 
-        var userDto = userService.login(loginRequestDto.getUsername(), loginRequestDto.getPassword());
+        try {
+            var userDto = userService.login(loginRequestDto.getUsername(), loginRequestDto.getPassword());
 
-        if (userDto == null) {
-            bindingResult.rejectValue("username", "", "Wrong username or password!");
-            bindingResult.rejectValue("password", "", "Wrong username or password!");
-            return "auth/login";
-        }
 
-        HttpSession session = request.getSession(); // krijo nje session te ri
-        session.setAttribute("user", userDto);
-        session.setAttribute("grupi", "2");
+            HttpSession session = request.getSession(); // krijo nje session te ri
+            session.setAttribute("user", userDto);
+            session.setAttribute("grupi", "2");
 //        session.setAttribute("items", "laptop lenovo x carbon");
 
 
-        Cookie cookie = new Cookie("userId", String.valueOf(userDto.getId()));
-        if (loginRequestDto.isRememberMe())
-            cookie.setMaxAge(60 * 60 * 24); // 1 day cookie
-        else
-            cookie.setMaxAge(60 * 60); //1 hour
-        response.addCookie(cookie);
+            Cookie cookie = new Cookie("userId", String.valueOf(userDto.getId()));
+            if (loginRequestDto.isRememberMe())
+                cookie.setMaxAge(60 * 60 * 24); // 1 day cookie
+            else
+                cookie.setMaxAge(60 * 60); //1 hour
+            response.addCookie(cookie);
 
-        if (returnUrl != null && !returnUrl.isBlank())
-            return "redirect:" + returnUrl;
+            if (returnUrl != null && !returnUrl.isBlank())
+                return "redirect:" + returnUrl;
 
-        return "redirect:/";
+            return "redirect:/";
+        } catch (UsernameNotFoundException e) {
+            bindingResult.rejectValue("username", "error.loginRequestDto",
+                    "Username not found!");
+            return "auth/login";
+        } catch (WrongPasswordException e) {
+            bindingResult.rejectValue("password", "error.loginRequestDto",
+                    "Wrong password!");
+            return "auth/login";
+        }
+
     }
 
     @GetMapping("/register")
@@ -79,10 +91,35 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@Valid @ModelAttribute UserRequestRegistrationDto userRequestRegistrationDto,
-                           BindingResult bindingResult) {
-        if(bindingResult.hasErrors()) {
+                           BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+        if (bindingResult.hasErrors()) {
             return "auth/register";
         }
+
+        if (!userRequestRegistrationDto.getPassword().equals(userRequestRegistrationDto.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", "error.userRequestRegistrationDto",
+                    "Password and Confirm Password do not match!");
+            return "auth/register";
+        }
+
+        try {
+            UserDto userDto = userService.register(userRequestRegistrationDto);
+            redirectAttributes.addFlashAttribute("message", "User registered successfully!");
+            // mundemi me ruajt sessionin qe eshte logu
+
+        } catch (UsernameExistException e) {
+            bindingResult.rejectValue("username", "error.userRequestRegistrationDto",
+                    "Username already exists!");
+            return "auth/register";
+        } catch (EmailExistException e) {
+            bindingResult.rejectValue("email", "error.userRequestRegistrationDto",
+                    "Email already exists!");
+            return "auth/register";
+        }
+
+
+        //service per registrim
+
         return "redirect:/login";
     }
 

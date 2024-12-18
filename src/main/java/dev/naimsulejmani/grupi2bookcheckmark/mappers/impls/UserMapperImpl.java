@@ -2,6 +2,7 @@ package dev.naimsulejmani.grupi2bookcheckmark.mappers.impls;
 
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserDto;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserListDto;
+import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserRequestRegistrationDto;
 import dev.naimsulejmani.grupi2bookcheckmark.mappers.UserMapper;
 import dev.naimsulejmani.grupi2bookcheckmark.models.User;
 import org.springframework.stereotype.Component;
@@ -42,6 +43,23 @@ public class UserMapperImpl implements UserMapper {
         user.setCity(userDto.getCity());
         user.setCountry(userDto.getCountry());
         user.setPostalCode(userDto.getPostalCode());
+        return user;
+    }
+
+    @Override
+    public User userRequestRegistrationDtoToUser(UserRequestRegistrationDto userRequestRegistrationDto) {
+        User user = new User();
+        user.setName(userRequestRegistrationDto.getName());
+        user.setSurname(userRequestRegistrationDto.getSurname());
+        user.setUsername(userRequestRegistrationDto.getUsername());
+        user.setEmail(userRequestRegistrationDto.getEmail());
+        user.setImageUrl(userRequestRegistrationDto.getImageUrl());
+        user.setInterests(userRequestRegistrationDto.getInterests());
+        user.setBirthdate(userRequestRegistrationDto.getBirthdate());
+        user.setAddress(userRequestRegistrationDto.getAddress());
+        user.setCity(userRequestRegistrationDto.getCity());
+        user.setCountry(userRequestRegistrationDto.getCountry());
+        user.setPostalCode(userRequestRegistrationDto.getPostalCode());
         return user;
     }
 

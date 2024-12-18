@@ -2,6 +2,7 @@ package dev.naimsulejmani.grupi2bookcheckmark.services;
 
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserDto;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserListDto;
+import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserRequestRegistrationDto;
 
 import java.util.List;
 
@@ -13,6 +14,8 @@ public interface UserService {
 
     List<UserListDto> getUserListing();
     //User login(String username, String password);
+
+    UserDto register(UserRequestRegistrationDto userRequestRegistrationDto);
 }
 
 /*
