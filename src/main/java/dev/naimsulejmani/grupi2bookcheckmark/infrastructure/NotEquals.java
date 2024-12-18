@@ -7,7 +7,7 @@ import java.lang.annotation.*;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = MinAgeValidator.class)
+@Constraint(validatedBy = NotEqualValidator.class)
 @Documented
 public @interface NotEquals {
 

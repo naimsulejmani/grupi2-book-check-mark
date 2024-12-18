@@ -17,14 +17,8 @@ public class UserMapperImpl implements UserMapper {
         userDto.setSurname(user.getSurname());
         userDto.setUsername(user.getUsername());
         userDto.setEmail(user.getEmail());
-        userDto.setImageUrl(user.getImageUrl());
-        userDto.setInterests(user.getInterests());
         userDto.setBirthdate(user.getBirthdate());
-        userDto.setAddress(user.getAddress());
-        userDto.setCity(user.getCity());
         userDto.setCountry(user.getCountry());
-        userDto.setPostalCode(user.getPostalCode());
-        userDto.setGender(user.getGender());
         return userDto;
     }
 
@@ -36,13 +30,8 @@ public class UserMapperImpl implements UserMapper {
         user.setSurname(userDto.getSurname());
         user.setUsername(userDto.getUsername());
         user.setEmail(userDto.getEmail());
-        user.setImageUrl(userDto.getImageUrl());
-        user.setInterests(userDto.getInterests());
         user.setBirthdate(userDto.getBirthdate());
-        user.setAddress(userDto.getAddress());
-        user.setCity(userDto.getCity());
         user.setCountry(userDto.getCountry());
-        user.setPostalCode(userDto.getPostalCode());
         return user;
     }
 
@@ -53,13 +42,8 @@ public class UserMapperImpl implements UserMapper {
         user.setSurname(userRequestRegistrationDto.getSurname());
         user.setUsername(userRequestRegistrationDto.getUsername());
         user.setEmail(userRequestRegistrationDto.getEmail());
-        user.setImageUrl(userRequestRegistrationDto.getImageUrl());
-        user.setInterests(userRequestRegistrationDto.getInterests());
         user.setBirthdate(userRequestRegistrationDto.getBirthdate());
-        user.setAddress(userRequestRegistrationDto.getAddress());
-        user.setCity(userRequestRegistrationDto.getCity());
         user.setCountry(userRequestRegistrationDto.getCountry());
-        user.setPostalCode(userRequestRegistrationDto.getPostalCode());
         return user;
     }
 

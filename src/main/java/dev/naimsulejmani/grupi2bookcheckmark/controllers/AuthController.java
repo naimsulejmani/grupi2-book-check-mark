@@ -4,6 +4,7 @@ import dev.naimsulejmani.grupi2bookcheckmark.dtos.LoginRequestDto;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserDto;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserRequestRegistrationDto;
 import dev.naimsulejmani.grupi2bookcheckmark.exceptions.EmailExistException;
+import dev.naimsulejmani.grupi2bookcheckmark.exceptions.UserNotFoundException;
 import dev.naimsulejmani.grupi2bookcheckmark.exceptions.UsernameExistException;
 import dev.naimsulejmani.grupi2bookcheckmark.exceptions.WrongPasswordException;
 import dev.naimsulejmani.grupi2bookcheckmark.services.UserService;
@@ -12,7 +13,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,7 +71,7 @@ public class AuthController {
                 return "redirect:" + returnUrl;
 
             return "redirect:/";
-        } catch (UsernameNotFoundException e) {
+        } catch (UserNotFoundException e) {
             bindingResult.rejectValue("username", "error.loginRequestDto",
                     "Username not found!");
             return "auth/login";
@@ -84,7 +84,8 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String register() {
+    public String register(Model model) {
+        model.addAttribute("userRequestRegistrationDto", new UserRequestRegistrationDto());
         return "auth/register";
     }
 

@@ -20,21 +20,11 @@ public class UserDto {
 
     private String email;
 
-    private String imageUrl;
-
-    private String interests;
-
     private LocalDate birthdate;
 
-    private String address;
-
-    private String city;
 
     private String country;
 
-    private String postalCode;
-
-    private char gender;
 
     public String getFullName() {
         return name + " " + surname;

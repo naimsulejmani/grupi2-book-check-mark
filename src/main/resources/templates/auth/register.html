@@ -50,7 +50,7 @@
 
                         <div class="d-flex justify-content-center py-4">
                             <a th:href="@{/}" class="logo d-flex align-items-center w-auto">
-                                <img src="assets/img/logo.png" alt="">
+                                <img src="/assets/img/logo.png" alt="">
                                 <span class="d-none d-lg-block">NiceAdmin</span>
                             </a>
                         </div><!-- End Logo -->
@@ -64,39 +64,84 @@
                                     <p class="text-center small">Enter your personal details to create account</p>
                                 </div>
 
-                                <form class="row g-3 needs-validation" novalidate>
+                                <form class="row g-3 needs-validation" method="post" th:object="${userRequestRegistrationDto}">
                                     <div class="col-12">
-                                        <label for="yourName" class="form-label">Your Name</label>
-                                        <input type="text" name="name" class="form-control" id="yourName" required>
-                                        <div class="invalid-feedback">Please, enter your name!</div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label for="yourEmail" class="form-label">Your Email</label>
-                                        <input type="email" name="email" class="form-control" id="yourEmail" required>
-                                        <div class="invalid-feedback">Please enter a valid Email adddress!</div>
-                                    </div>
-
-                                    <div class="col-12">
-                                        <label for="yourUsername" class="form-label">Username</label>
-                                        <div class="input-group has-validation">
-                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                            <input type="text" name="username" class="form-control" id="yourUsername" required>
-                                            <div class="invalid-feedback">Please choose a username.</div>
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" th:field="*{name}" class="form-control" required minlength="3" maxlength="50">
+                                        <div>
+                                            <span class="text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
-                                        <label for="yourPassword" class="form-label">Password</label>
-                                        <input type="password" name="password" class="form-control" id="yourPassword" required>
-                                        <div class="invalid-feedback">Please enter your password!</div>
+                                        <label for="surname" class="form-label">Surname</label>
+                                        <input type="text" th:field="*{surname}" class="form-control" required minlength="3" maxlength="50">
+                                        <div>
+                                            <span class="text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="birthdate" class="form-label">Birthdate</label>
+                                        <input type="date" th:field="*{birthdate}" class="form-control" required>
+                                        <div>
+                                            <span class="text-danger" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="country" class="form-label">Country</label>
+                                        <input type="text" th:field="*{country}" class="form-control" required minlength="3" maxlength="50">
+                                        <div>
+                                            <span class="text-danger" th:if="${#fields.hasErrors('country')}" th:errors="*{country}"></span>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12">
+                                        <label for="email" class="form-label">Your Email</label>
+                                        <input type="email" th:field="*{email}"  class="form-control" required>
+                                        <div>
+                                            <span class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="username" class="form-label">Username</label>
+                                        <div class="input-group has-validation">
+                                            <span class="input-group-text" id="inputGroupPrepend">@</span>
+                                            <input type="text" th:field="*{username}" class="form-control" required minlength="4" max="50">
+                                            <div>
+                                                <span class="text-danger" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" th:field="*{password}" class="form-control" required minlength="8" maxlength="100"
+                                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                                        <div>
+                                            <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                        <input type="password" th:field="*{confirmPassword}" class="form-control" required minlength="8" maxlength="100"
+                                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters">
+                                        <div>
+                                            <span class="text-danger" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></span>
+                                        </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="form-check">
-                                            <input class="form-check-input" name="terms" type="checkbox" value="" id="acceptTerms" required>
+                                            <input class="form-check-input" th:field="*{acceptTerms}" type="checkbox" required>
                                             <label class="form-check-label" for="acceptTerms">I agree and accept the <a href="#">terms and conditions</a></label>
-                                            <div class="invalid-feedback">You must agree before submitting.</div>
+                                            <div>
+                                                <span class="text-danger" th:if="${#fields.hasErrors('acceptTerms')}" th:errors="*{acceptTerms}"></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">

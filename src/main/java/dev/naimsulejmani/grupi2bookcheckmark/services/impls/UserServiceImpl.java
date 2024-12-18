@@ -29,44 +29,6 @@ public class UserServiceImpl implements UserService {
         this.repository = repository;
         this.mapper = mapper;
         this.passwordEncoder = passwordEncoder;
-
-        if (repository.count() == 0) {
-            User user = new User();
-            user.setCity("Fushe Kosove");
-            user.setEmail("naim.sulejmani@gmail.com");
-            user.setBirthdate(LocalDate.now().minusYears(38));
-            user.setCountry("Kosova");
-            user.setInterests("Sport, reading and everything!");
-            user.setAddress("rr. Nena tereze, F.K");
-            user.setName("Naim");
-            user.setSurname("Sulejmani");
-            user.setPostalCode("12000");
-            user.setGender('M');
-            user.setPassword("Admin123");
-            user.setUsername("naimsulejmani");
-            user.setImageUrl(null);
-
-            repository.save(user);
-        }
-
-        if (repository.count() == 1) {
-            User user = new User();
-            user.setCity("Fushe Kosove");
-            user.setEmail("andarexhepi@gmail.com");
-            user.setBirthdate(LocalDate.now().minusYears(38));
-            user.setCountry("Kosova");
-            user.setInterests("Sport, reading and everything!");
-            user.setAddress("rr. Nena tereze, F.K");
-            user.setName("Anda");
-            user.setSurname("Rexhepi");
-            user.setPostalCode("12000");
-            user.setGender('M');
-            user.setPassword("Admin123");
-            user.setUsername("andarexhepi");
-            user.setImageUrl(null);
-
-            repository.save(user);
-        }
     }
 
     @Override
@@ -91,7 +53,7 @@ public class UserServiceImpl implements UserService {
         User user = optionalUser.get();
 
 
-        if(!passwordEncoder.matches(password, user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new WrongPasswordException();
         }
 //        if (!user.getPassword().equals(password)) {
@@ -148,7 +110,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(userRequestRegistrationDto.getPassword()));
 
         User savedUser = repository.save(user);
-        
+
         return mapper.toDto(savedUser);
     }
 }

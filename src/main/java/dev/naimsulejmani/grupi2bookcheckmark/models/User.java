@@ -33,29 +33,13 @@ public class User {
     @Column(nullable = false, length = 100)
     private String password;
 
-    @Column(length = 500)
-    private String imageUrl;
-
-    @Column(length = 500)
-    private String interests;
 
     @Column(nullable = false)
     private LocalDate birthdate;
 
-    @Column(nullable = false, length = 200)
-    private String address;
-
-    @Column(nullable = false, length = 50)
-    private String city;
-
     @Column(nullable = false, length = 50)
     private String country;
 
-    @Column(nullable = false, length = 10)
-    private String postalCode;
-
-    @Column(nullable = false, length = 1)
-    private char gender;
 }
 
 
