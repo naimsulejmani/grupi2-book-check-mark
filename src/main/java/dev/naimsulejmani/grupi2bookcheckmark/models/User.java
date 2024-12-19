@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
@@ -39,6 +40,14 @@ public class User {
 
     @Column(nullable = false, length = 50)
     private String country;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Reading> readings;
+
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviews;
 
 }
 

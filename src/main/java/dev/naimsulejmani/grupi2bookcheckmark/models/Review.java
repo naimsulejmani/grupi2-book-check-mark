@@ -1,6 +1,7 @@
 package dev.naimsulejmani.grupi2bookcheckmark.models;
 
 import dev.naimsulejmani.grupi2bookcheckmark.enums.Rating;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +13,34 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity(name = "reviews")
 public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long userId;
-    private long bookId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
+
     private String comment;
+
+    @Enumerated(EnumType.ORDINAL)
     private Rating rating;
+
     private LocalDateTime reviewDate;
 }
+
+
+
+
+
+
+
+
+
+

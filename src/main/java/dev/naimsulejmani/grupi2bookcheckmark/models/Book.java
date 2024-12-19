@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -38,13 +40,6 @@ public class Book {
     @NotBlank
     @NotNull
     private String title;
-
-
-    @Column(nullable = false, length = 100)
-    @Size(max = 100)
-    @NotBlank
-    @NotNull
-    private String author;
 
     @Column(nullable = false, length = 100)
     @Size(max = 100)
@@ -83,6 +78,21 @@ public class Book {
     @PositiveOrZero
     @Column(nullable = false, precision = 10)
     private double price;
+
+    @OneToMany(mappedBy = "book")
+    private List<Reading> readings;
+
+    @OneToMany(mappedBy = "book")
+    private List<Review> reviews; // List<Review>
+
+    @ManyToMany()
+    @JoinTable(
+            name = "books_authors",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"book_id", "author_id"})
+    )
+    private List<Author> authors;
 }
 
 
