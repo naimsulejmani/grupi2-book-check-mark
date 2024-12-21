@@ -19,11 +19,9 @@ import java.util.List;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @PositiveOrZero
     private long id;
 
     @Column(nullable = false, length = 13, unique = true)
-    @Size(min = 13, max = 13, message = "ISBN should be 13 characters")
     private String isbn;
 
     /*
@@ -36,20 +34,12 @@ public class Book {
      */
 
     @Column(nullable = false, length = 100)
-    @Size(max = 100)
-    @NotBlank
-    @NotNull
     private String title;
 
     @Column(nullable = false, length = 100)
-    @Size(max = 100)
-    @NotBlank
-    @NotNull
     private String publisher;
 
     @Column(nullable = false)
-    @PositiveOrZero
-    @Min(1900)
     private int year;
 
     @Column(nullable = false, length = 20)
@@ -57,25 +47,17 @@ public class Book {
     private BookCategory category;
 
     @Column(nullable = false, length = 4000)
-    @Size(max = 4000)
-    @NotBlank
     private String description;
 
     @Column(nullable = false, length = 100)
-    @Size(max = 100)
-    @NotNull
-    @NotBlank
     private String coverUrl;
 
-    @PositiveOrZero
-    @Min(1)
     private int totalPages;
 
     @Column(length = 5)
     @Enumerated(EnumType.STRING)
     private BookPageFormat pageFormat;
 
-    @PositiveOrZero
     @Column(nullable = false, precision = 10)
     private double price;
 

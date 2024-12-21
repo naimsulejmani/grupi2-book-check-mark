@@ -27,11 +27,14 @@ public class Review {
     @JoinColumn(name = "book_id")
     private Book book;
 
+    @Column(length = 4000)
     private String comment;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.ORDINAL)
     private Rating rating;
 
+    @Column(nullable = false)
     private LocalDateTime reviewDate;
 }
 

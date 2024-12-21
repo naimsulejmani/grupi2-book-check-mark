@@ -29,8 +29,11 @@ public class Reading {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @Column(nullable = false)
     private int currentPage;
+    @Column(nullable = false)
     private LocalDate startDate;
+
     private LocalDate endDate;
     private boolean finished;
 

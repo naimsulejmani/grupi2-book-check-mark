@@ -24,8 +24,11 @@ public class ReadingDetail {
 
     @Column(nullable = false)
     private int currentReadingPage; //
+    @Column(nullable = false)
     private LocalDate date;
+    @Column(length = 4000)
     private String comment;
+    @Column(length = 100)
     private String location;
 
 }

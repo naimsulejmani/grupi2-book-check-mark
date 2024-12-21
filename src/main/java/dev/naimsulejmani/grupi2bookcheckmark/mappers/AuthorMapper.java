@@ -3,7 +3,6 @@ package dev.naimsulejmani.grupi2bookcheckmark.mappers;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.AuthorDto;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.SimpleAuthorDto;
 import dev.naimsulejmani.grupi2bookcheckmark.models.Author;
-import org.mapstruct.Context;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
