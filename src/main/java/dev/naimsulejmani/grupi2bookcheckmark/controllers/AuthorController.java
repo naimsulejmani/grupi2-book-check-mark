@@ -3,7 +3,7 @@ package dev.naimsulejmani.grupi2bookcheckmark.controllers;
 import dev.naimsulejmani.grupi2bookcheckmark.dtos.UserDto;
 import dev.naimsulejmani.grupi2bookcheckmark.helpers.FileHelper;
 import dev.naimsulejmani.grupi2bookcheckmark.models.Author;
-import dev.naimsulejmani.grupi2bookcheckmark.services.AuthorService;
+import dev.naimsulejmani.grupi2bookcheckmark.services.BadAuthorService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -19,11 +19,11 @@ import java.io.IOException;
 @Controller
 @RequestMapping("/authors")
 public class AuthorController {
-    private final AuthorService authorService;
+    private final BadAuthorService badAuthorService;
     private final FileHelper fileHelper;
 
-    public AuthorController(AuthorService authorService, FileHelper fileHelper) {
-        this.authorService = authorService;
+    public AuthorController(BadAuthorService badAuthorService, FileHelper fileHelper) {
+        this.badAuthorService = badAuthorService;
         this.fileHelper = fileHelper;
     }
 
@@ -34,7 +34,7 @@ public class AuthorController {
 //                case "ERR101" :
 //            }
 //        }
-        model.addAttribute("authors", authorService.findAll());
+        model.addAttribute("authors", badAuthorService.findAll());
         return "authors/index";
     }
 
@@ -107,7 +107,7 @@ public class AuthorController {
         }
 
 
-        var newAuthor = authorService.add(author);
+        var newAuthor = badAuthorService.add(author);
         if (newAuthor == null) {
             bindingResult.rejectValue("email", "author.email", "EMAIL already exists");
             return "authors/new";
@@ -120,7 +120,7 @@ public class AuthorController {
 
     @GetMapping("/{id}/edit")
     public String editAuthor(Model model, @PathVariable Long id) {
-        var author = authorService.findById(id);
+        var author = badAuthorService.findById(id);
         model.addAttribute("author", author);
         return "authors/edit";
     }
@@ -177,20 +177,20 @@ public class AuthorController {
             return "redirect:/authors";
         }
 
-        authorService.add(author);
+        badAuthorService.add(author);
         return "redirect:/authors";
     }
 
     @GetMapping("/{id}/details")
     public String details(Model model, @PathVariable Long id) {
-        var author = authorService.findById(id);
+        var author = badAuthorService.findById(id);
         model.addAttribute("author", author);
         return "authors/details";
     }
 
     @GetMapping("/{id}/delete")
     public String delete(Model model, @PathVariable Long id) {
-        var author = authorService.findById(id);
+        var author = badAuthorService.findById(id);
         model.addAttribute("author", author);
         model.addAttribute("deleteBtn", true);
 //       return "authors/delete";
@@ -199,7 +199,7 @@ public class AuthorController {
 
     @PostMapping("/{id}/delete")
     public String delete(@PathVariable Long id) {
-        authorService.deleteById(id);
+        badAuthorService.deleteById(id);
         return "redirect:/authors";
     }
 
